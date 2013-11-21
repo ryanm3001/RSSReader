@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<project name="RssArticleChooser" default="compile" basedir=".">
+	<property environment="env" />
+	<property name="src" value="${basedir}/src" />
+	<property name="bin" value="${basedir}/bin" />
+	<property name="lib" value="${basedir}/lib" />
+	<property name="doc" value="${basedir}/doc" />
+	<property name="build" value="${basedir}/build" />
+
+	<target name="prepare" description="Setting up temporary directory to support build.">
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src}" destdir="${build}" includes="**/*.java" listfiles="yes">
+		</javac>
+	</target>
+
+	<target name="deploy" depends="compile">
+		<jar destfile="${bin}/RssArticleChooser.jar" basedir="${build}" />
+	</target>
+
+	<target name="run" depends="deploy">
+		<java fork="true" classname="RssArticleChooser">
+			<classpath path="${bin}/RssArticleChooser.jar" />
+		</java>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}" />
+		<delete file="${bin}/RssArticleChooser.jar" />
+	</target>
+</project>
